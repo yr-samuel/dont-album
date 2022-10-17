@@ -1,12 +1,17 @@
 import { useRef } from "react";
 import { useUpload } from "../../hooks";
 import useAlbum from "../../hooks/album";
+import { useRecoilState } from "recoil";
+import { albumState, loadingState } from "../../atoms";
 
 const Album = () => {
 	const upload = useUpload();
-	const album = useAlbum();
-	const albumName = location.pathname;
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const [isLoading] = useRecoilState(loadingState);
+	const [album] = useRecoilState(albumState);
+	const albumName = location.pathname;
+
+	useAlbum();
 
 	const handleInputClick = () => {
 		if (!inputRef) return;
@@ -37,13 +42,20 @@ const Album = () => {
 				ref={inputRef}
 				onChange={handleUploadImage}
 			/>
-			<button
-				className="btn btn-primary position-fixed bottom-0 end-0 mb-3 mx-3 rounded-circle d-flex justify-content-center align-items-center"
-				style={{ width: 50, height: 50 }}
-				onClick={handleInputClick}
-			>
-				+
-			</button>
+			{isLoading ? (
+				<div
+					className="spinner-border position-fixed bottom-0 end-0 mb-3 mx-3"
+					role="status"
+				/>
+			) : (
+				<button
+					className="btn btn-primary position-fixed bottom-0 end-0 mb-3 mx-3 rounded-circle d-flex justify-content-center align-items-center"
+					style={{ width: 50, height: 50 }}
+					onClick={handleInputClick}
+				>
+					+
+				</button>
+			)}
 		</section>
 	);
 };

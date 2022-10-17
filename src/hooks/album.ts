@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { database } from "../config";
 import { Album, Field } from "../interfaces";
+import { useRecoilState } from "recoil";
+import { albumState } from "../atoms";
 
 const useAlbum = () => {
-	const [album, setAlbum] = useState<Album | null>(null);
+	const [, setAlbum] = useRecoilState(albumState);
 	const params = useParams();
 	const dashedParams = params["*"]!.replaceAll("/", "_");
-	console.log(dashedParams);
 
 	useEffect(() => {
 		(async () => {
@@ -21,8 +22,6 @@ const useAlbum = () => {
 			setAlbum(images);
 		})();
 	}, [params]);
-
-	return album;
 };
 
 export default useAlbum;
