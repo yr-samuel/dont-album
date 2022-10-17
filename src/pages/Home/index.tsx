@@ -20,7 +20,7 @@ const Home = () => {
 			style={{ height: "100vh" }}
 		>
 			<h1>DONTALBUM</h1>
-			<div className="d-inline-flex align-items-center gap-1">
+			<div className="d-inline-flex align-items-center gap-1 flex-wrap justify-content-center text-center">
 				{HOME_URL} <input type="text" ref={inputRef} />
 				<button className="btn btn-primary btn-sm" onClick={moveToAlbum}>
 					GO
