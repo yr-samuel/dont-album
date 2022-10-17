@@ -9,3 +9,7 @@ export type Album = Picture[];
 export interface Field {
 	images: Album;
 }
+
+export interface ContextAlbum {
+	album: Album;
+}
