@@ -1,6 +1,12 @@
 import { useCallback } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { doc, setDoc, arrayUnion, updateDoc } from "firebase/firestore";
+import {
+	doc,
+	setDoc,
+	arrayUnion,
+	updateDoc,
+	arrayRemove,
+} from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { database } from "../config";
@@ -58,7 +64,15 @@ const useUpload = () => {
 		}
 	}, []);
 
-	return { create, update };
+	const remove = useCallback(async (picture: Picture) => {
+		await updateDoc(albumRef, {
+			images: arrayRemove(picture),
+		});
+
+		setAlbum((pictures) => pictures.filter(({ id }) => id !== picture.id));
+	}, []);
+
+	return { create, update, remove };
 };
 
 export default useUpload;
