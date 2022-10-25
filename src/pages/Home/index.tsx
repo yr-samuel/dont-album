@@ -1,38 +1,15 @@
-import { useMemo, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import InputAlbum from "./InputAlbum";
+import ReasonsList from "./ReasonsList";
 
 const Home = () => {
-	const navigate = useNavigate();
-	const inputRef = useRef<HTMLInputElement | null>(null);
-	const HOME_URL = useMemo(
-		() => location.href.replace(/https:\/\/|http:\/\//, "www."),
-		[]
-	);
-
-	const moveToAlbum = () => {
-		if (!inputRef.current) return;
-		navigate(`/${inputRef.current.value}`);
-	};
-
 	return (
 		<section
 			className="d-flex align-items-center justify-content-center pt-5 flex-column gap-5"
 			style={{ height: "100vh" }}
 		>
-			<h1>DONTALBUM</h1>
-			<div className="d-inline-flex align-items-center gap-1 flex-wrap justify-content-center text-center">
-				{HOME_URL} <input type="text" ref={inputRef} />
-				<button className="btn btn-primary btn-sm" onClick={moveToAlbum}>
-					GO
-				</button>
-			</div>
-			<ul className="list-unstyled d-flex flex-column gap-2 text-center">
-				<li>Dont login, just use a URL</li>
-				<li>Dont save, image is auto-saved!</li>
-				<li>Share or save images online</li>
-				<li>Dont forget, you can use yourURL/yourFolder/yourSubfolder</li>
-				<li>Dontalbum!</li>
-			</ul>
+			<h1 className="text-uppercase">dontalbum</h1>
+			<InputAlbum />
+			<ReasonsList />
 		</section>
 	);
 };
